@@ -1,0 +1,24 @@
+// Dragon Curve
+startshape dragon(14, 1)
+
+S = sqrt(2)/2
+
+shape dragon(natural n, natural right) {
+  if (n == 0) {
+    hline() []
+  } else {
+    if (right) {
+      dragon(n -- 1, 1) [ r -45 s S ]
+      dragon(n -- 1, 0) [ x 0.5 y -0.5 r 45 s S ]
+    } else {
+      dragon(n -- 1, 1) [ r 45 s S ]
+      dragon(n -- 1, 0) [ x 0.5 y 0.5 r -45 s S ]
+    }
+  }
+}
+
+path hline {
+  MOVETO(0, 0)
+  LINETO(1, 0)
+  STROKE()[]
+}

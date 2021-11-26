@@ -1,0 +1,13 @@
+startshape tree
+
+shape tree  {
+  tree [[y 0.5 rotate -30 s 0.7 y 0.5]]
+  line []
+  tree [[y 0.5 rotate  30 s 0.7 y 0.5]]
+}
+
+path line {
+  MOVETO(0, -0.5)
+  LINETO(0,  0.5)
+  STROKE()[]
+}

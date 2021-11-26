@@ -1,0 +1,114 @@
+// Hilbert curve
+
+startshape A(5)
+
+F(n, base, diff) = if(n == 0, base, diff + F(n-1, base, diff/2))
+
+shape A(natural n) {
+  if (n == 0) {
+    curve_A []
+  } else {
+    S = (1/2)^n
+    hline [y F(n,  0.5,  0.25) s S]
+    vline [x F(n,  0.5, -0.25) s S]
+    hline [y F(n, -0.5, -0.25) s S]
+
+    B(n -- 1) [x -0.5 y +0.5 s 0.5]
+    A(n -- 1) [x +0.5 y +0.5 s 0.5]
+    A(n -- 1) [x +0.5 y -0.5 s 0.5]
+    D(n -- 1) [x -0.5 y -0.5 s 0.5]
+  }
+}
+
+shape B(natural n) {
+  if (n == 0) {
+    curve_B []
+  } else {
+    S = (1/2)^n
+    vline [x F(n,  0.5,  0.25) s S]
+    hline [y F(n, -0.5,  0.25) s S]
+    vline [x F(n, -0.5, -0.25) s S]
+
+    A(n -- 1) [x -0.5 y +0.5 s 0.5]
+    B(n -- 1) [x -0.5 y -0.5 s 0.5]
+    B(n -- 1) [x +0.5 y -0.5 s 0.5]
+    C(n -- 1) [x +0.5 y +0.5 s 0.5]
+  }
+}
+
+shape C(natural n) {
+  if (n == 0) {
+    curve_C []
+  } else {
+    S = (1/2)^n
+    hline [y F(n, -0.5, -0.25) s S]
+    vline [x F(n, -0.5,  0.25) s S]
+    hline [y F(n,  0.5,  0.25) s S]
+
+    D(n -- 1) [x +0.5 y -0.5 s 0.5]
+    C(n -- 1) [x -0.5 y -0.5 s 0.5]
+    C(n -- 1) [x -0.5 y +0.5 s 0.5]
+    B(n -- 1) [x +0.5 y +0.5 s 0.5]
+  }
+}
+
+shape D(natural n) {
+  if (n == 0) {
+    curve_D []
+  } else {
+    S = (1/2)^n
+    vline [x F(n,  0.5,  0.25) s S]
+    hline [y F(n,  0.5, -0.25) s S]
+    vline [x F(n, -0.5, -0.25) s S]
+
+    C(n -- 1) [x +0.5 y -0.5 s 0.5]
+    D(n -- 1) [x +0.5 y +0.5 s 0.5]
+    D(n -- 1) [x -0.5 y +0.5 s 0.5]
+    A(n -- 1) [x -0.5 y -0.5 s 0.5]
+  }
+}
+
+
+path curve_A {
+   MOVETO(-0.5, +0.5)
+   LINETO(+0.5, +0.5)
+   LINETO(+0.5, -0.5)
+   LINETO(-0.5, -0.5)
+   STROKE()[]
+}
+
+path curve_B {
+   MOVETO(-0.5, +0.5)
+   LINETO(-0.5, -0.5)
+   LINETO(+0.5, -0.5)
+   LINETO(+0.5, +0.5)
+   STROKE()[]
+}
+
+path curve_C {
+   MOVETO(+0.5, -0.5)
+   LINETO(-0.5, -0.5)
+   LINETO(-0.5, +0.5)
+   LINETO(+0.5, +0.5)
+   STROKE()[]
+}
+
+path curve_D {
+   MOVETO(+0.5, -0.5)
+   LINETO(+0.5, +0.5)
+   LINETO(-0.5, +0.5)
+   LINETO(-0.5, -0.5)
+   STROKE()[]
+}
+
+path hline {
+   MOVETO(-0.5, 0)
+   LINETO(+0.5, 0)
+   STROKE() []
+}
+
+path vline {
+   MOVETO(0, -0.5)
+   LINETO(0, +0.5)
+   STROKE() []
+}

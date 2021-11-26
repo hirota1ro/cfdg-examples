@@ -1,0 +1,11 @@
+startshape tree
+
+shape tree
+rule {
+  SQUARE []
+  tree [y 0.98 size 0.99 rotate 1]
+}
+rule 0.02 {
+  tree []
+  tree [rotate -30 flip 90]
+}

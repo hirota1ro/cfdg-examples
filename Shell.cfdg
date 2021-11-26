@@ -1,0 +1,13 @@
+startshape shell
+
+shape shell {
+  SQUARE []
+  shell [ y 1 r 4 s 0.98 ]
+  curve [ x -1 flip 0 b 0.5 a -0.5 ]
+  curve [ x +1 r 180 b 0.5 a -0.5 ]
+}
+
+shape curve {
+  CIRCLE []
+  curve [ x -1 r 3 s 0.95 ]
+}

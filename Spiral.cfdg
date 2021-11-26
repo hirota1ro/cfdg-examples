@@ -1,0 +1,11 @@
+startshape spiral
+
+shape spiral
+rule {
+  SQUARE []
+  spiral [ y 0.9 r 4 s 0.99 ]
+}
+rule 0.01 {
+  spiral []
+  spiral [ flip 90 ]
+}

@@ -1,0 +1,13 @@
+// triangle
+startshape tri [b 0]
+
+H = sin(60)
+H1 = 2 * H / 3
+H2 = -H / 3
+
+shape tri {
+  TRIANGLE()[]
+  tri [        y H1 rotate 0..180 s 0.5 b 0.2 ]
+  tri [ x  0.5 y H2 rotate 0..180 s 0.5 b 0.2 ]
+  tri [ x -0.5 y H2 rotate 0..180 s 0.5 b 0.2 ]
+}

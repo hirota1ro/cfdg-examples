@@ -1,0 +1,110 @@
+// Penrose Tiling
+startshape penrose(3) [ hue 90 ]
+
+φ = (1 + sqrt(5)) / 2 // 黄金数
+
+shape penrose(natural n) {
+  loop 5 [r 72] {
+    thin(n) [ flip 90 ]
+    thin(n) [ r 36 ]
+  }
+}
+
+// 細い二等辺三角形 辺の長さ比(φ:φ:1) 角度(π/5, 2π/5, 2π/5)
+shape thin(natural n) {
+  if (n <= 0) {
+    draw_thin []
+  } else {
+    // Thin_Small 分割
+    y1 = -φ * sin(72) // 360/5
+    r1 = 90 + 18
+    s1 = 1 / φ
+    x3 = cos(72)
+    y3 = -sin(72)
+    r3 = -r1
+
+    thin(n -- 1) [ x -0.5 y y1 rotate r1 s s1 ]
+    fat(n -- 1) [ x x3 y y3 rotate r3 ]
+  }
+}
+
+// 太い二等辺三角形 辺の長さ比(1:1:φ) 角度(3π/5, π/5, π/5)
+shape fat(natural n) {
+  if (n <= 0) {
+    draw_fat []
+  } else {
+    // Fat_Large 分割
+    y1 = -sin(36)
+    s1 = 1 / φ
+    x2 = -(φ / 2) + (φ - 1)
+    r2 = -90 - 18 - 36
+    s2 = 1 / (1+φ)
+    r3 = 180 - 36
+    x3 = s2 * cos(36)
+    y3 = -s2 * sin(36)
+
+    fat(n -- 1) [ x x2 y y1 rotate r2 s s1 ] // F_S, F_L
+    thin(n -- 1) [ x x2 y y1 r r3 s s2 flip 90 ] // F_L
+    fat(n -- 1) [ x x3 y y3 s s1 flip 90 ] // F_L
+  }
+}
+
+// 細い二等辺三角形を描きます
+// 二等辺三角形の頂点を原点(0,0)とします
+// 下(y軸負方向)に底辺を描きます
+// 0(上)→1(左)→2(右)の反時計回りを正位置とします
+path draw_thin {
+  MOVETO(-0.5/φ, -φ * sin(360/5)/φ) // (3)
+  LINETO(-0.5, -φ * sin(360/5)) // (1)
+  LINETO(-0.5 + (1-φ/2), -φ * sin(360/5)) // (4)
+  CLOSEPOLY()
+  FILL()[ sat 1 b 1 ]
+
+  MOVETO(0, 0) // (0)
+  LINETO(-0.5/φ, -φ * sin(360/5)/φ) // (3)
+  LINETO(-0.5 + (1-φ/2), -φ * sin(360/5)) // (4)
+  LINETO(+0.5, -φ * sin(360/5)) // (2)
+  CLOSEPOLY()
+  FILL()[ hue 180 sat 1 b 1 ]
+
+  MOVETO(-0.5 + (1-φ/2), -φ * sin(360/5)) // (4)
+  LINETO(-0.5/φ, -φ * sin(360/5)/φ) // (3)
+  LINETO(+0.5/2, -φ * sin(360/5)/2) // (5)
+  STROKE(0.1)[ b -1 ]
+
+  MOVETO(0, 0) // (0)
+  LINETO(-0.5, -φ * sin(360/5)) // (1)
+  LINETO(+0.5, -φ * sin(360/5)) // (2)
+  CLOSEPOLY()
+  STROKE(0.01)[ b 0.9 ]
+}
+
+// 太い二等辺三角形を描きます
+// 二等辺三角形の頂点を原点(0,0)とします
+// 下(y軸負方向)に底辺を描きます
+// 0(上)→1(左)→2(右)の反時計回りを正位置とします
+path draw_fat {
+  MOVETO(-φ/2/φ, -sin(180/5)/φ) // (3)
+  LINETO(-φ/2, -sin(180/5)) // (1)
+  LINETO(+φ/2-φ/(1+φ), -sin(180/5)) // (4)
+  CLOSEPOLY()
+  FILL()[ sat 1 b 1 ]
+
+  MOVETO(0, 0) // (0)
+  LINETO(-φ/2/φ, -sin(180/5)/φ) // (3)
+  LINETO(+φ/2-φ/(1+φ), -sin(180/5)) // (4)
+  LINETO(+φ/2, -sin(180/5)) // (2)
+  CLOSEPOLY()
+  FILL()[ hue 180 sat 1 b 1 ]
+
+  MOVETO(-φ/2/φ, -sin(180/5)/φ) // (3)
+  LINETO(+φ/2-φ/(1+φ), -sin(180/5)) // (4)
+  LINETO(+φ/2/2, -sin(180/5)/2) // (5)
+  STROKE(0.05)[ b -1 ]
+
+  MOVETO(0, 0) // (0)
+  LINETO(-φ/2, -sin(180/5)) // (1)
+  LINETO(+φ/2, -sin(180/5)) // (2)
+  CLOSEPOLY()
+  STROKE(0.01)[ b 0.9 ]
+}

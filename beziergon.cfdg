@@ -1,0 +1,56 @@
+startshape spiral(0) [ a -0.1 ]
+
+shape spiral(natural angle) {
+  beziergon(angle) []
+  spiral(mod(angle + 2, 360)) [ y 0.3 r 5.26 s 0.99 ]
+}
+
+vector2 fromAngle(θ) = cos(θ), sin(θ)
+
+vector2 rotate90CCW(vector2 V) = -V[1], V[0]
+
+gap = 0.4
+swing = 0.2
+vector2 shake(vector2 V, number θ) = V * swing * sin(θ) + rotate90CCW(V) * gap
+
+BaseA = rand(360)
+BaseB = rand(360)
+BaseC = rand(360)
+BaseD = rand(360)
+BaseE = rand(360)
+BaseF = rand(360)
+BaseG = rand(360)
+BaseH = rand(360)
+
+path beziergon(natural angle) {
+
+  A = fromAngle(0)
+  B = fromAngle(45)
+  C = fromAngle(90)
+  D = fromAngle(135)
+  E = fromAngle(180)
+  F = fromAngle(225)
+  G = fromAngle(270)
+  H = fromAngle(315)
+
+  Da = shake(A, BaseA + angle)
+  Db = shake(B, BaseB + angle)
+  Dc = shake(C, BaseC + angle)
+  Dd = shake(D, BaseD + angle)
+  De = shake(E, BaseE + angle)
+  Df = shake(F, BaseF + angle)
+  Dg = shake(G, BaseG + angle)
+  Dh = shake(H, BaseH + angle)
+
+  MOVETO(A)
+  CURVETO(B, A+Da, B-Db)
+  CURVETO(C, B+Db, C-Dc)
+  CURVETO(D, C+Dc, D-Dd)
+  CURVETO(E, D+Dd, E-De)
+  CURVETO(F, E+De, F-Df)
+  CURVETO(G, F+Df, G-Dg)
+  CURVETO(H, G+Dg, H-Dh)
+  CURVETO(A, H+Dh, A-Da)
+  CLOSEPOLY()
+  STROKE(0.01) []
+}

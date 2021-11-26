@@ -1,0 +1,18 @@
+// Fir tree もみの木
+
+startshape FirTree
+
+shape FirTree {
+  branch(10) []
+}
+
+shape branch(natural n) {
+  if (n > 0) {
+    SQUARE []
+    branch(n -- 1) [ y 0.5 s 0.99 ]
+  } else {  
+    FirTree [       s 0.9 ]
+    FirTree [ r  90 s 0.5 ]
+    FirTree [ r -90 s 0.5 ]
+  }
+}

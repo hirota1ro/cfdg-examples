@@ -1,0 +1,13 @@
+startshape Sierpinski_gasket
+
+shape Sierpinski_gasket {
+  TRIANGLE []
+  gasket []
+}
+
+shape gasket {
+  TRIANGLE [b 1 s 0.5 rotate 180]
+  gasket [y 0.29 s 0.5 ]
+  gasket [x 0.251 y -0.145 s 0.5 ]
+  gasket [x -0.251 y -0.145 s 0.5 ]
+}

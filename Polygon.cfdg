@@ -1,0 +1,43 @@
+startshape poly [ alpha -0.45 ]
+
+RATIO = 1.8
+
+shape poly
+rule {
+  polygon(3) []
+  S = RATIO / 3
+  poly [ x cos(0) y sin(0) size S ]
+  poly [ x cos(120) y sin(120) size S ]
+  poly [ x cos(240) y sin(240) size S ]
+}
+rule {
+  polygon(4) []
+  S = RATIO / 4
+  poly [ x cos(0) y sin(0) size S ]
+  poly [ x cos(90) y sin(90) size S ]
+  poly [ x cos(180) y sin(180) size S ]
+  poly [ x cos(270) y sin(270) size S ]
+}
+rule {
+  polygon(5) []
+  S = RATIO / 5
+  poly [ x cos(0) y sin(0) size S ]
+  poly [ x cos(72) y sin(72) size S ]
+  poly [ x cos(144) y sin(144) size S ]
+  poly [ x cos(216) y sin(216) size S ]
+  poly [ x cos(288) y sin(288) size S ]
+}
+
+// 半径1の円に内接する正n角形を描く
+path polygon(natural n) {
+  θ = 360 / n
+  loop i = n [] {
+    if (i == 0) {
+      MOVETO(cos(i * θ), sin(i * θ))
+    } else {
+      LINETO(cos(i * θ), sin(i * θ))
+    }
+  }
+  CLOSEPOLY()
+  STROKE()[]
+}
